@@ -7,277 +7,68 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    background: #f5f5f5;
-    color: #1a1a1a;
-    padding: 24px;
-  }
-
-  .header { margin-bottom: 24px; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f5; color: #1a1a1a; padding: 24px; }
+  .header-row { display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
   .header p { font-size: 13px; color: #666; margin-bottom: 4px; }
   .header h1 { font-size: 22px; font-weight: 500; }
-
-  .header-row {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-
-  .update-info {
-    font-size: 11px;
-    color: #888;
-    text-align: right;
-  }
-
-  .refresh-btn {
-    font-size: 12px;
-    padding: 5px 12px;
-    border-radius: 8px;
-    border: 1px solid #ddd;
-    background: white;
-    cursor: pointer;
-    margin-top: 4px;
-  }
-
+  .update-info { font-size: 11px; color: #888; text-align: right; }
+  .refresh-btn { font-size: 12px; padding: 5px 12px; border-radius: 8px; border: 1px solid #ddd; background: white; cursor: pointer; margin-top: 4px; }
   .refresh-btn:hover { background: #f0f0f0; }
-
-  .cards {
-    display: flex;
-    gap: 12px;
-    flex-wrap: wrap;
-    margin-bottom: 24px;
-  }
-
-  .card {
-    background: white;
-    border-radius: 12px;
-    border: 1px solid #e8e8e8;
-    padding: 16px 20px;
-    flex: 1;
-    min-width: 220px;
-    border-left: 3px solid #ddd;
-  }
-
-  .card-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 12px;
-  }
-
-  .net-pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    font-size: 12px;
-    color: #666;
-  }
-
-  .net-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-  }
-
-  .badge {
-    font-size: 11px;
-    padding: 2px 8px;
-    border-radius: 20px;
-    white-space: nowrap;
-  }
-
-  .badge-live {
-    background: #e1f5ee;
-    color: #0a5c3c;
-    border: 1px solid #1d9e75;
-  }
-
-  .badge-manual {
-    background: #faeeda;
-    color: #5a3000;
-    border: 1px solid #ba7517;
-  }
-
-  .badge-loading {
-    background: #f0f0f0;
-    color: #888;
-    border: 1px solid #ddd;
-  }
-
-  .badge-error {
-    background: #fcebeb;
-    color: #7a1f1f;
-    border: 1px solid #e24b4a;
-  }
-
-  .metric-label {
-    font-size: 12px;
-    color: #888;
-    margin-bottom: 4px;
-  }
-
-  .metric-row {
-    display: flex;
-    align-items: baseline;
-    gap: 8px;
-    flex-wrap: wrap;
-  }
-
-  .metric-value {
-    font-size: 28px;
-    font-weight: 500;
-    line-height: 1.2;
-  }
-
-  .delta-badge {
-    font-size: 12px;
-    font-weight: 600;
-    line-height: 1;
-  }
-
-  .delta-up { color: #0a8f5a; }
-  .delta-down { color: #c0392b; }
-  .delta-neutral { color: #888; }
-
-  .metric-note {
-    font-size: 12px;
-    color: #888;
-    margin-top: 8px;
-  }
-
-  .edit-input {
-    font-size: 24px;
-    font-weight: 500;
-    border: none;
-    background: transparent;
-    color: #1a1a1a;
-    width: 100%;
-    outline: none;
-    border-bottom: 1px dashed #ccc;
-  }
-
-  .save-row {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-top: 8px;
-  }
-
-  .save-btn {
-    font-size: 11px;
-    padding: 3px 10px;
-    border-radius: 6px;
-    border: 1px solid #ddd;
-    background: white;
-    cursor: pointer;
-  }
-
+  .cards { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
+  .card { background: white; border-radius: 12px; border: 1px solid #e8e8e8; padding: 16px 20px; flex: 1; min-width: 180px; border-left: 3px solid #ddd; }
+  .card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+  .net-pill { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; color: #666; }
+  .net-dot { width: 8px; height: 8px; border-radius: 50%; }
+  .badge { font-size: 11px; padding: 2px 8px; border-radius: 20px; }
+  .badge-live { background: #e1f5ee; color: #0a5c3c; border: 1px solid #1d9e75; }
+  .badge-manual { background: #faeeda; color: #5a3000; border: 1px solid #ba7517; }
+  .badge-loading { background: #f0f0f0; color: #888; border: 1px solid #ddd; }
+  .badge-error { background: #fcebeb; color: #7a1f1f; border: 1px solid #e24b4a; }
+  .metric-label { font-size: 12px; color: #888; margin-bottom: 4px; }
+  .metric-value { font-size: 28px; font-weight: 500; line-height: 1.2; }
+  .metric-note { font-size: 12px; color: #888; margin-top: 6px; }
+  .deltas { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+  .delta-pill { font-size: 12px; padding: 3px 8px; border-radius: 6px; font-weight: 500; }
+  .delta-pos { background: #e1f5ee; color: #0a5c3c; }
+  .delta-neg { background: #fcebeb; color: #7a1f1f; }
+  .delta-zero { background: #f0f0f0; color: #888; }
+  .delta-label { font-size: 10px; color: #aaa; margin-top: 2px; }
+  .edit-input { font-size: 24px; font-weight: 500; border: none; background: transparent; color: #1a1a1a; width: 100%; outline: none; border-bottom: 1px dashed #ccc; }
+  .save-row { display: flex; align-items: center; gap: 8px; margin-top: 8px; }
+  .save-btn { font-size: 11px; padding: 3px 10px; border-radius: 6px; border: 1px solid #ddd; background: white; cursor: pointer; }
   .save-btn:hover { background: #f0f0f0; }
-
-  .saved-msg {
-    font-size: 11px;
-    color: #0a5c3c;
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
-
-  .section-label {
-    font-size: 12px;
-    color: #888;
-    margin-bottom: 10px;
-  }
-
-  .chart-wrap {
-    position: relative;
-    width: 100%;
-    height: 240px;
-    background: white;
-    border-radius: 12px;
-    border: 1px solid #e8e8e8;
-    padding: 16px;
-  }
-
-  .charts-row {
-    display: flex;
-    gap: 12px;
-    flex-wrap: wrap;
-    margin-top: 20px;
-  }
-
-  .chart-col {
-    flex: 2;
-    min-width: 280px;
-  }
-
-  .chart-col-sm {
-    flex: 1;
-    min-width: 200px;
-  }
-
-  .status-panel {
-    background: white;
-    border-radius: 12px;
-    border: 1px solid #e8e8e8;
-    padding: 16px 20px;
-    margin-top: 20px;
-  }
-
-  .status-panel h3 {
-    font-size: 13px;
-    font-weight: 500;
-    margin-bottom: 12px;
-  }
-
-  .status-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    font-size: 12px;
-    padding: 6px 0;
-    border-bottom: 1px solid #f0f0f0;
-  }
-
+  .saved-msg { font-size: 11px; color: #0a5c3c; opacity: 0; transition: opacity 0.3s; }
+  .divider { border: none; border-top: 1px solid #e8e8e8; margin: 20px 0; }
+  .section-label { font-size: 12px; color: #888; margin-bottom: 10px; }
+  .chart-wrap { position: relative; width: 100%; background: white; border-radius: 12px; border: 1px solid #e8e8e8; padding: 16px; }
+  .charts-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 20px; }
+  .chart-col { flex: 2; min-width: 280px; }
+  .chart-col-sm { flex: 1; min-width: 200px; }
+  .status-panel { background: white; border-radius: 12px; border: 1px solid #e8e8e8; padding: 16px 20px; margin-top: 20px; }
+  .status-panel h3 { font-size: 13px; font-weight: 500; margin-bottom: 12px; }
+  .status-row { display: flex; align-items: center; justify-content: space-between; font-size: 12px; padding: 6px 0; border-bottom: 1px solid #f0f0f0; }
   .status-row:last-child { border-bottom: none; }
   .status-label { color: #666; }
-
-  .donut-legend {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    margin-top: 10px;
-  }
-
-  .legend-item {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 12px;
-    color: #666;
-  }
-
-  .legend-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 2px;
-    flex-shrink: 0;
-  }
+  .donut-legend { display: flex; flex-direction: column; gap: 6px; margin-top: 10px; }
+  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #666; }
+  .legend-dot { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
+  .growth-table { width: 100%; border-collapse: collapse; margin-top: 20px; background: white; border-radius: 12px; border: 1px solid #e8e8e8; overflow: hidden; }
+  .growth-table th { font-size: 11px; color: #888; font-weight: 500; padding: 10px 16px; text-align: left; border-bottom: 1px solid #f0f0f0; background: #fafafa; }
+  .growth-table td { font-size: 13px; padding: 10px 16px; border-bottom: 1px solid #f5f5f5; color: #1a1a1a; }
+  .growth-table tr:last-child td { border-bottom: none; }
+  .growth-table .net-cell { display: flex; align-items: center; gap: 6px; font-weight: 500; }
 </style>
 </head>
 <body>
 
-<div class="header">
-  <div class="header-row">
-    <div>
-      <p>Câmara Municipal de Cascais</p>
-      <h1>Redes sociais — seguidores</h1>
-    </div>
-    <div class="update-info">
-      <div id="update-time">A carregar...</div>
-      <button class="refresh-btn" onclick="loadFacebook()">Atualizar ↻</button>
-    </div>
+<div class="header-row">
+  <div class="header">
+    <p>Câmara Municipal de Cascais</p>
+    <h1>Redes sociais — seguidores</h1>
+  </div>
+  <div class="update-info">
+    <div id="update-time">A carregar...</div>
+    <button class="refresh-btn" onclick="loadFacebook()">Atualizar ↻</button>
   </div>
 </div>
 
@@ -288,10 +79,8 @@
       <span class="badge badge-loading" id="fb-badge">A carregar...</span>
     </div>
     <div class="metric-label">Seguidores</div>
-    <div class="metric-row">
-      <div class="metric-value" id="fb-value">—</div>
-      <div class="delta-badge delta-neutral" id="fb-delta"></div>
-    </div>
+    <div class="metric-value" id="fb-value">—</div>
+    <div class="deltas" id="fb-deltas"></div>
     <div class="metric-note" id="fb-note">A ligar à API...</div>
   </div>
 
@@ -301,10 +90,8 @@
       <span class="badge badge-manual">Manual</span>
     </div>
     <div class="metric-label">Seguidores</div>
-    <div class="metric-row">
-      <input class="edit-input" id="ig-input" type="text" placeholder="ex: 45200" onfocus="this.select()">
-      <div class="delta-badge delta-neutral" id="ig-delta"></div>
-    </div>
+    <input class="edit-input" id="ig-input" type="text" placeholder="ex: 117769" onfocus="this.select()">
+    <div class="deltas" id="ig-deltas"></div>
     <div class="save-row">
       <button class="save-btn" onclick="saveManual('ig')">Guardar</button>
       <span class="saved-msg" id="ig-saved">✓ Guardado</span>
@@ -318,10 +105,8 @@
       <span class="badge badge-manual">Manual</span>
     </div>
     <div class="metric-label">Seguidores</div>
-    <div class="metric-row">
-      <input class="edit-input" id="li-input" type="text" placeholder="ex: 16500" onfocus="this.select()">
-      <div class="delta-badge delta-neutral" id="li-delta"></div>
-    </div>
+    <input class="edit-input" id="li-input" type="text" placeholder="ex: 12840" onfocus="this.select()">
+    <div class="deltas" id="li-deltas"></div>
     <div class="save-row">
       <button class="save-btn" onclick="saveManual('li')">Guardar</button>
       <span class="saved-msg" id="li-saved">✓ Guardado</span>
@@ -335,20 +120,39 @@
     </div>
     <div class="metric-label">Todos os canais</div>
     <div class="metric-value" id="total-value">—</div>
+    <div class="deltas" id="total-deltas"></div>
     <div class="metric-note">Facebook + Instagram + LinkedIn</div>
   </div>
 </div>
 
-<div class="section-label">Evolução de seguidores — Facebook (histórico acumulado)</div>
+<!-- Tabela de crescimento -->
+<div class="section-label">Crescimento por período</div>
+<table class="growth-table">
+  <thead>
+    <tr>
+      <th>Rede</th>
+      <th>Hoje vs ontem</th>
+      <th>Esta semana (7 dias)</th>
+      <th>Este mês (30 dias)</th>
+      <th>Seguidores atuais</th>
+    </tr>
+  </thead>
+  <tbody id="growth-tbody">
+    <tr><td colspan="5" style="color:#888;text-align:center;padding:20px">A carregar dados...</td></tr>
+  </tbody>
+</table>
 
 <div class="charts-row">
   <div class="chart-col">
     <div class="chart-wrap">
-      <canvas id="growthChart" role="img" aria-label="Evolução de seguidores do Facebook"></canvas>
+      <div class="section-label">Evolução de seguidores — Facebook (histórico acumulado)</div>
+      <div style="position:relative;height:220px">
+        <canvas id="growthChart" role="img" aria-label="Evolução de seguidores do Facebook"></canvas>
+      </div>
     </div>
   </div>
   <div class="chart-col-sm">
-    <div class="chart-wrap" style="height:auto">
+    <div class="chart-wrap">
       <div class="section-label">Distribuição total</div>
       <div style="position:relative;height:160px">
         <canvas id="donutChart" role="img" aria-label="Distribuição de seguidores por rede"></canvas>
@@ -360,99 +164,98 @@
 
 <div class="status-panel">
   <h3>Estado das ligações</h3>
-  <div class="status-row">
-    <span class="status-label">Meta Graph API (Facebook)</span>
-    <span class="badge badge-loading" id="fb-status">A verificar...</span>
-  </div>
-  <div class="status-row">
-    <span class="status-label">Token expira em</span>
-    <span style="font-weight:500">~60 dias</span>
-  </div>
-  <div class="status-row">
-    <span class="status-label">Instagram API</span>
-    <span class="badge badge-manual">Pendente</span>
-  </div>
-  <div class="status-row">
-    <span class="status-label">LinkedIn API</span>
-    <span class="badge badge-manual">Pendente</span>
-  </div>
+  <div class="status-row"><span class="status-label">Meta Graph API (Facebook)</span><span class="badge badge-loading" id="fb-status">A verificar...</span></div>
+  <div class="status-row"><span class="status-label">Token expira em</span><span style="font-weight:500">~60 dias</span></div>
+  <div class="status-row"><span class="status-label">Instagram API</span><span class="badge badge-manual">Pendente</span></div>
+  <div class="status-row"><span class="status-label">LinkedIn API</span><span class="badge badge-manual">Pendente</span></div>
 </div>
 
 <script>
 const TOKEN = 'EAASGsuJnUn0BRHd0oaDZB45DkZA7eIVxHY9YCC3dOUmDIM3vOIdAi1nMusGUIhNn57fpMlbzcrEZCo6yQz8M0C5ojLfjZCseseDjO9rjNummJdd5TA6G4g5pRq7MxFzZAKyCP9I81DNmHLhRqjpHMZA5cyWxoiVByeqEO0sRFDNjnNCNRebLKurp8tZA35McC7jCndBCuj9OR9SDIvoQAwZD';
 const PAGE_ID = '346668692583';
-
 let fbFollowers = 0;
 let growthChart = null;
 let donutChart = null;
 
 function fmt(n) {
-  if (n === null || n === undefined || isNaN(n)) return '—';
+  if (!n || isNaN(n)) return '—';
   return Math.round(n).toLocaleString('pt-PT');
 }
 
-function getToday() {
-  return new Date().toLocaleDateString('pt-PT');
+function deltaPill(diff, label) {
+  if (diff === null) return '';
+  const cls = diff > 0 ? 'delta-pos' : diff < 0 ? 'delta-neg' : 'delta-zero';
+  const sign = diff > 0 ? '+' : '';
+  return `<div><div class="delta-pill ${cls}">${sign}${fmt(diff)}</div><div class="delta-label">${label}</div></div>`;
 }
 
-function getHistoryKey(net) {
-  return `${net}_history_cascais`;
+function getDelta(history, daysAgo) {
+  if (!history || history.length < 2) return null;
+  const today = history[history.length - 1].value;
+  const target = history[history.length - 1 - daysAgo];
+  if (!target) return null;
+  return today - target.value;
 }
 
-function getHistory(net) {
-  return JSON.parse(localStorage.getItem(getHistoryKey(net)) || '[]');
+function renderDeltas(elId, history) {
+  const el = document.getElementById(elId);
+  if (!el || !history || history.length < 2) { if(el) el.innerHTML = '<span style="font-size:11px;color:#aaa">Histórico insuficiente — volta amanhã</span>'; return; }
+  const d1 = getDelta(history, 1);
+  const d7 = getDelta(history, Math.min(7, history.length-1));
+  const d30 = getDelta(history, Math.min(30, history.length-1));
+  el.innerHTML = deltaPill(d1,'vs ontem') + deltaPill(d7,'vs 7 dias') + deltaPill(d30,'vs 30 dias');
 }
 
-function saveNetworkHistory(net, count) {
-  let h = getHistory(net);
-  const today = getToday();
-
-  if (!h.length || h[h.length - 1].date !== today) {
-    h.push({ date: today, value: count });
-  } else {
-    h[h.length - 1].value = count;
-  }
-
-  if (h.length > 60) h = h.slice(-60);
-  localStorage.setItem(getHistoryKey(net), JSON.stringify(h));
+function getHistory(key) {
+  return JSON.parse(localStorage.getItem(key) || '[]');
 }
 
-function getPreviousDayDelta(net, currentValue) {
-  const h = getHistory(net);
-  if (h.length < 2) return null;
-  const previous = h[h.length - 2].value;
-  return currentValue - previous;
-}
+function renderGrowthTable() {
+  const fbH = getHistory('fb_history_cascais');
+  const igH = getHistory('ig_history_cascais');
+  const liH = getHistory('li_history_cascais');
 
-function renderDelta(elementId, delta) {
-  const el = document.getElementById(elementId);
+  const nets = [
+    { name: 'Facebook', color: '#378ADD', history: fbH, current: fbH.length ? fbH[fbH.length-1].value : 0 },
+    { name: 'Instagram', color: '#D4537E', history: igH, current: igH.length ? igH[igH.length-1].value : 0 },
+    { name: 'LinkedIn', color: '#185FA5', history: liH, current: liH.length ? liH[liH.length-1].value : 0 }
+  ];
 
-  if (delta === null) {
-    el.textContent = '';
-    el.className = 'delta-badge delta-neutral';
-    return;
-  }
-
-  if (delta > 0) {
-    el.textContent = `↑ +${fmt(delta)}`;
-    el.className = 'delta-badge delta-up';
-  } else if (delta < 0) {
-    el.textContent = `↓ ${fmt(Math.abs(delta))}`;
-    el.className = 'delta-badge delta-down';
-  } else {
-    el.textContent = '= 0';
-    el.className = 'delta-badge delta-neutral';
-  }
+  const tbody = document.getElementById('growth-tbody');
+  tbody.innerHTML = nets.map(n => {
+    const d1 = getDelta(n.history, 1);
+    const d7 = getDelta(n.history, Math.min(7, n.history.length-1));
+    const d30 = getDelta(n.history, Math.min(30, n.history.length-1));
+    const pillClass = v => v === null ? 'delta-zero' : v > 0 ? 'delta-pos' : v < 0 ? 'delta-neg' : 'delta-zero';
+    const pillVal = v => v === null ? '—' : (v > 0 ? '+' : '') + fmt(v);
+    return `<tr>
+      <td><div class="net-cell"><span style="width:10px;height:10px;border-radius:50%;background:${n.color};display:inline-block"></span>${n.name}</div></td>
+      <td><span class="delta-pill ${pillClass(d1)}">${pillVal(d1)}</span></td>
+      <td><span class="delta-pill ${pillClass(d7)}">${pillVal(d7)}</span></td>
+      <td><span class="delta-pill ${pillClass(d30)}">${pillVal(d30)}</span></td>
+      <td style="font-weight:500">${fmt(n.current)}</td>
+    </tr>`;
+  }).join('');
 }
 
 function updateTotal() {
   const fb = fbFollowers || 0;
-  const ig = parseInt((localStorage.getItem('ig_followers') || '').replace(/\D/g, '')) || 0;
-  const li = parseInt((localStorage.getItem('li_followers') || '').replace(/\D/g, '')) || 0;
+  const ig = parseInt((localStorage.getItem('ig_followers')||'').replace(/\D/g,''))||0;
+  const li = parseInt((localStorage.getItem('li_followers')||'').replace(/\D/g,''))||0;
   const total = fb + ig + li;
-
   document.getElementById('total-value').textContent = total > 0 ? fmt(total) : '—';
+
+  const fbH = getHistory('fb_history_cascais');
+  const igH = getHistory('ig_history_cascais');
+  const liH = getHistory('li_history_cascais');
+
+  const combinedHistory = fbH.map((f, i) => ({
+    date: f.date,
+    value: f.value + (igH[i]?.value||0) + (liH[i]?.value||0)
+  }));
+  renderDeltas('total-deltas', combinedHistory);
   renderDonut(fb, ig, li);
+  renderGrowthTable();
 }
 
 async function loadFacebook() {
@@ -460,194 +263,114 @@ async function loadFacebook() {
   const status = document.getElementById('fb-status');
   const val = document.getElementById('fb-value');
   const note = document.getElementById('fb-note');
-
   badge.textContent = 'A carregar...';
   badge.className = 'badge badge-loading';
-
   try {
     const res = await fetch(`https://graph.facebook.com/v19.0/${PAGE_ID}?fields=followers_count,fan_count&access_token=${TOKEN}`);
     const data = await res.json();
-
     if (data.error) {
-      badge.textContent = 'Erro API';
-      badge.className = 'badge badge-error';
-      status.textContent = 'Erro';
-      status.className = 'badge badge-error';
-      val.textContent = '—';
-      note.textContent = data.error.message;
-      return;
+      badge.textContent = 'Erro API'; badge.className = 'badge badge-error';
+      status.textContent = 'Erro'; status.className = 'badge badge-error';
+      val.textContent = '—'; note.textContent = data.error.message; return;
     }
-
     const count = data.followers_count || data.fan_count || 0;
     fbFollowers = count;
-
-    saveNetworkHistory('fb', count);
-    renderDelta('fb-delta', getPreviousDayDelta('fb', count));
-
-    badge.textContent = 'Dados reais';
-    badge.className = 'badge badge-live';
-    status.textContent = 'Ligado';
-    status.className = 'badge badge-live';
+    badge.textContent = 'Dados reais'; badge.className = 'badge badge-live';
+    status.textContent = 'Ligado'; status.className = 'badge badge-live';
     val.textContent = fmt(count);
-
     const now = new Date();
-    const t = now.toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' });
-
+    const t = now.toLocaleTimeString('pt-PT',{hour:'2-digit',minute:'2-digit'});
     note.textContent = 'Atualizado às ' + t;
     document.getElementById('update-time').textContent = 'Última atualização: ' + t;
-
+    saveHistory('fb_history_cascais', count);
+    renderDeltas('fb-deltas', getHistory('fb_history_cascais'));
     renderGrowth();
     updateTotal();
-  } catch (e) {
-    badge.textContent = 'Sem ligação';
-    badge.className = 'badge badge-error';
-    status.textContent = 'Sem ligação';
-    status.className = 'badge badge-error';
-    val.textContent = '—';
-    note.textContent = 'Verifica a ligação à internet.';
+  } catch(e) {
+    badge.textContent = 'Sem ligação'; badge.className = 'badge badge-error';
+    status.textContent = 'Sem ligação'; status.className = 'badge badge-error';
+    val.textContent = '—'; note.textContent = 'Verifica a ligação à internet.';
+  }
+}
+
+function saveHistory(key, count) {
+  let h = JSON.parse(localStorage.getItem(key)||'[]');
+  const today = new Date().toLocaleDateString('pt-PT');
+  if (!h.length || h[h.length-1].date !== today) {
+    h.push({date:today, value:count});
+    if (h.length > 60) h = h.slice(-60);
+    localStorage.setItem(key, JSON.stringify(h));
+  } else {
+    h[h.length-1].value = count;
+    localStorage.setItem(key, JSON.stringify(h));
   }
 }
 
 function renderGrowth() {
-  let h = getHistory('fb');
-
-  if (!h.length && fbFollowers > 0) {
-    h = [{ date: getToday(), value: fbFollowers }];
-  }
-
+  let h = getHistory('fb_history_cascais');
+  if (!h.length && fbFollowers > 0) h = [{date: new Date().toLocaleDateString('pt-PT'), value: fbFollowers}];
   const ctx = document.getElementById('growthChart').getContext('2d');
   if (growthChart) growthChart.destroy();
-
   growthChart = new Chart(ctx, {
     type: 'line',
     data: {
-      labels: h.map(x => x.date),
+      labels: h.map(x=>x.date),
       datasets: [{
-        label: 'Seguidores Facebook',
-        data: h.map(x => x.value),
-        borderColor: '#378ADD',
-        backgroundColor: '#378ADD18',
-        borderWidth: 2,
-        pointRadius: h.length === 1 ? 6 : 3,
-        fill: true,
-        tension: 0.35
+        label: 'Seguidores Facebook', data: h.map(x=>x.value),
+        borderColor: '#378ADD', backgroundColor: '#378ADD18',
+        borderWidth: 2, pointRadius: h.length===1?6:3, fill: true, tension: 0.35
       }]
     },
     options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        legend: { display: false }
-      },
-      scales: {
-        x: {
-          ticks: {
-            font: { size: 11 },
-            color: '#888',
-            autoSkip: true,
-            maxTicksLimit: 8
-          },
-          grid: { color: 'rgba(0,0,0,0.05)' }
-        },
-        y: {
-          ticks: {
-            font: { size: 11 },
-            color: '#888',
-            callback: v => v >= 1000 ? (v / 1000).toFixed(0) + 'k' : v
-          },
-          grid: { color: 'rgba(0,0,0,0.05)' },
-          min: h.length ? Math.max(0, Math.min(...h.map(x => x.value)) - 1000) : 0
-        }
+      responsive:true, maintainAspectRatio:false,
+      plugins:{legend:{display:false}},
+      scales:{
+        x:{ticks:{font:{size:11},color:'#888',autoSkip:true,maxTicksLimit:8},grid:{color:'rgba(0,0,0,0.05)'}},
+        y:{ticks:{font:{size:11},color:'#888',callback:v=>v>=1000?(v/1000).toFixed(0)+'k':v},grid:{color:'rgba(0,0,0,0.05)'},min:h.length?Math.max(0,Math.min(...h.map(x=>x.value))-1000):0}
       }
     }
   });
 }
 
 function renderDonut(fb, ig, li) {
-  const total = fb + ig + li;
+  const total = fb+ig+li;
   const ctx = document.getElementById('donutChart').getContext('2d');
-
   if (donutChart) donutChart.destroy();
-
-  if (total === 0) {
-    document.getElementById('donut-legend').innerHTML = '';
-    return;
-  }
-
+  if (!total) return;
   donutChart = new Chart(ctx, {
-    type: 'doughnut',
-    data: {
-      labels: ['Facebook', 'Instagram', 'LinkedIn'],
-      datasets: [{
-        data: [fb, ig, li],
-        backgroundColor: ['#378ADD', '#D4537E', '#185FA5'],
-        borderWidth: 0
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      cutout: '68%',
-      plugins: {
-        legend: { display: false }
-      }
-    }
+    type:'doughnut',
+    data:{labels:['Facebook','Instagram','LinkedIn'],datasets:[{data:[fb,ig,li],backgroundColor:['#378ADD','#D4537E','#185FA5'],borderWidth:0}]},
+    options:{responsive:true,maintainAspectRatio:false,cutout:'68%',plugins:{legend:{display:false}}}
   });
-
-  const legend = document.getElementById('donut-legend');
-  const items = [
-    { l: 'Facebook', c: '#378ADD', v: fb },
-    { l: 'Instagram', c: '#D4537E', v: ig },
-    { l: 'LinkedIn', c: '#185FA5', v: li }
-  ];
-
-  legend.innerHTML = items.map(i =>
-    `<div class="legend-item"><span class="legend-dot" style="background:${i.c}"></span>${i.l} — ${total > 0 ? ((i.v / total) * 100).toFixed(1) : 0}%</div>`
-  ).join('');
+  document.getElementById('donut-legend').innerHTML = [
+    {l:'Facebook',c:'#378ADD',v:fb},{l:'Instagram',c:'#D4537E',v:ig},{l:'LinkedIn',c:'#185FA5',v:li}
+  ].map(i=>`<div class="legend-item"><span class="legend-dot" style="background:${i.c}"></span>${i.l} — ${total?((i.v/total)*100).toFixed(1):0}%</div>`).join('');
 }
 
 function saveManual(net) {
-  const input = document.getElementById(net + '-input');
-  const raw = input.value.replace(/\D/g, '');
-  const num = parseInt(raw) || 0;
-
+  const input = document.getElementById(net+'-input');
+  const raw = input.value.replace(/\D/g,'');
+  const num = parseInt(raw)||0;
   if (!num) return;
-
-  localStorage.setItem(net + '_followers', raw);
+  localStorage.setItem(net+'_followers', raw);
+  saveHistory(net+'_history_cascais', num);
   input.value = fmt(num);
-
-  saveNetworkHistory(net, num);
-  renderDelta(net + '-delta', getPreviousDayDelta(net, num));
-
-  const msg = document.getElementById(net + '-saved');
-  msg.style.opacity = '1';
-  setTimeout(() => msg.style.opacity = '0', 2500);
-
+  renderDeltas(net+'-deltas', getHistory(net+'_history_cascais'));
+  const msg = document.getElementById(net+'-saved');
+  msg.style.opacity='1';
+  setTimeout(()=>msg.style.opacity='0', 2500);
   updateTotal();
 }
 
 function loadManual() {
   const ig = localStorage.getItem('ig_followers');
   const li = localStorage.getItem('li_followers');
-
-  if (ig) {
-    const igNum = parseInt(ig);
-    document.getElementById('ig-input').value = fmt(igNum);
-    saveNetworkHistory('ig', igNum);
-    renderDelta('ig-delta', getPreviousDayDelta('ig', igNum));
-  }
-
-  if (li) {
-    const liNum = parseInt(li);
-    document.getElementById('li-input').value = fmt(liNum);
-    saveNetworkHistory('li', liNum);
-    renderDelta('li-delta', getPreviousDayDelta('li', liNum));
-  }
+  if (ig) { document.getElementById('ig-input').value = fmt(parseInt(ig)); renderDeltas('ig-deltas', getHistory('ig_history_cascais')); }
+  if (li) { document.getElementById('li-input').value = fmt(parseInt(li)); renderDeltas('li-deltas', getHistory('li_history_cascais')); }
 }
 
 loadManual();
 loadFacebook();
-updateTotal();
 setInterval(loadFacebook, 300000);
 </script>
 </body>
