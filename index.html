@@ -22,41 +22,23 @@
     --faint: rgba(240,244,255,0.12);
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(0,212,255,0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0,212,255,0.03) 1px, transparent 1px);
-    background-size: 60px 60px;
-    pointer-events: none;
-    z-index: 0;
-  }
+  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; }
+  body::before { content: ''; position: fixed; inset: 0; background-image: linear-gradient(rgba(0,212,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0,212,255,0.03) 1px, transparent 1px); background-size: 60px 60px; pointer-events: none; z-index: 0; }
   .orb { position: fixed; border-radius: 50%; filter: blur(120px); pointer-events: none; z-index: 0; opacity: 0.15; animation: drift 20s ease-in-out infinite alternate; }
   .orb1 { width: 500px; height: 500px; background: var(--blue); top: -200px; left: -100px; }
   .orb2 { width: 400px; height: 400px; background: var(--pink); bottom: -150px; right: -100px; animation-delay: -10s; }
-  @keyframes drift { from { transform: translate(0,0) scale(1); } to { transform: translate(30px, 20px) scale(1.1); } }
-
+  @keyframes drift { from { transform: translate(0,0) scale(1); } to { transform: translate(30px,20px) scale(1.1); } }
   .wrap { position: relative; z-index: 1; max-width: 1400px; margin: 0 auto; padding: 32px 24px; }
 
   header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 40px; flex-wrap: wrap; gap: 16px; }
-  .header-left { display: flex; flex-direction: column; gap: 4px; }
-  .header-eyebrow { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--blue); letter-spacing: 0.2em; text-transform: uppercase; }
+  .header-eyebrow { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--blue); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 4px; }
   h1 { font-size: 28px; font-weight: 700; letter-spacing: -0.5px; background: linear-gradient(135deg, var(--text) 0%, rgba(240,244,255,0.6) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-  .header-right { display: flex; align-items: center; gap: 12px; }
+  .header-right { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
   .live-badge { display: flex; align-items: center; gap: 6px; font-family: 'Space Mono', monospace; font-size: 11px; color: var(--green); background: rgba(0,255,136,0.08); border: 1px solid rgba(0,255,136,0.2); border-radius: 20px; padding: 5px 12px; }
   .live-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); animation: pulse 2s ease-in-out infinite; }
   @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.8)} }
-  .refresh-btn { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--muted); background: var(--faint); border: 1px solid var(--border2); border-radius: 8px; padding: 6px 14px; cursor: pointer; transition: all 0.2s; letter-spacing: 0.05em; }
-  .refresh-btn:hover { color: var(--blue); border-color: rgba(0,212,255,0.3); background: rgba(0,212,255,0.05); }
+  .refresh-btn { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--muted); background: var(--faint); border: 1px solid var(--border2); border-radius: 8px; padding: 6px 14px; cursor: pointer; transition: all 0.2s; }
+  .refresh-btn:hover { color: var(--blue); border-color: rgba(0,212,255,0.3); }
   #last-update { font-size: 11px; color: var(--muted); font-family: 'Space Mono', monospace; }
 
   .metrics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-bottom: 24px; }
@@ -79,9 +61,9 @@
   .pill-error { background: rgba(255,45,126,0.1); color: var(--pink); border: 1px solid rgba(255,45,126,0.2); }
 
   .metric-value { font-family: 'Space Mono', monospace; font-size: 38px; font-weight: 700; letter-spacing: -1px; line-height: 1; margin-bottom: 12px; }
-  .metric-value.fb-val { color: var(--blue); }
-  .metric-value.ig-val { color: var(--pink); }
-  .metric-value.total-val { background: linear-gradient(135deg, var(--green), var(--blue)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .fb-val { color: var(--blue); }
+  .ig-val { color: var(--pink); }
+  .total-val { background: linear-gradient(135deg, var(--green), var(--blue)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
 
   .deltas { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
   .delta { font-family: 'Space Mono', monospace; font-size: 11px; padding: 3px 8px; border-radius: 6px; }
@@ -96,11 +78,10 @@
 
   .growth-table { width: 100%; border-collapse: collapse; background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 24px; }
   .growth-table th { font-family: 'Space Mono', monospace; font-size: 10px; color: var(--muted); padding: 12px 16px; text-align: left; border-bottom: 1px solid var(--border); letter-spacing: 0.1em; text-transform: uppercase; background: rgba(255,255,255,0.02); }
-  .growth-table td { font-size: 13px; padding: 12px 16px; border-bottom: 1px solid var(--border); color: var(--text); }
+  .growth-table td { font-size: 13px; padding: 12px 16px; border-bottom: 1px solid var(--border); }
   .growth-table tr:last-child td { border-bottom: none; }
   .growth-table tr:hover td { background: rgba(255,255,255,0.02); }
   .net-tag { display: inline-flex; align-items: center; gap: 6px; font-weight: 500; }
-  .dp { font-family: 'Space Mono', monospace; font-size: 11px; }
 
   .charts-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 16px; margin-bottom: 24px; }
   @media (max-width: 800px) { .charts-grid { grid-template-columns: 1fr; } }
@@ -115,20 +96,20 @@
   .posts-sub { font-size: 11px; color: var(--muted); margin-top: 4px; }
 
   .weekly-panel { background: var(--bg2); border: 1px solid var(--border); border-radius: 16px; padding: 24px; margin-bottom: 24px; }
-  .weekly-week { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--muted); margin-bottom: 20px; letter-spacing: 0.05em; }
+  .weekly-week { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--muted); margin-bottom: 20px; }
   .weekly-week span { color: var(--blue); }
   .weekly-net { background: var(--bg3); border: 1px solid var(--border); border-radius: 12px; padding: 18px; }
-  .weekly-net-header { display: flex; align-items: center; gap: 8px; font-weight: 600; font-size: 13px; margin-bottom: 16px; color: var(--text); }
+  .weekly-net-header { display: flex; align-items: center; gap: 8px; font-weight: 600; font-size: 13px; margin-bottom: 16px; }
   .weekly-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
   .wfield label { font-family: 'Space Mono', monospace; font-size: 9px; color: var(--muted); display: block; margin-bottom: 5px; letter-spacing: 0.1em; text-transform: uppercase; }
   .wfield input { width: 100%; font-family: 'Space Mono', monospace; font-size: 15px; font-weight: 700; background: var(--bg2); border: 1px solid var(--border2); border-radius: 6px; padding: 7px 10px; color: var(--text); outline: none; transition: border-color 0.2s; }
   .wfield input:focus { border-color: rgba(255,45,126,0.4); }
   .weekly-save-row { margin-top: 14px; display: flex; align-items: center; gap: 10px; }
-  .wsave-btn { font-family: 'Space Mono', monospace; font-size: 10px; padding: 6px 14px; border-radius: 6px; border: 1px solid rgba(255,45,126,0.3); background: rgba(255,45,126,0.05); color: var(--pink); cursor: pointer; letter-spacing: 0.05em; transition: all 0.2s; }
+  .wsave-btn { font-family: 'Space Mono', monospace; font-size: 10px; padding: 6px 14px; border-radius: 6px; border: 1px solid rgba(255,45,126,0.3); background: rgba(255,45,126,0.05); color: var(--pink); cursor: pointer; transition: all 0.2s; }
   .wsave-btn:hover { background: rgba(255,45,126,0.1); }
   .wsaved { font-size: 10px; color: var(--green); opacity: 0; transition: opacity 0.3s; font-family: 'Space Mono', monospace; }
 
-  .activity-table { width: 100%; border-collapse: collapse; background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+  .activity-table { width: 100%; border-collapse: collapse; background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 24px; }
   .activity-table th { font-family: 'Space Mono', monospace; font-size: 9px; color: var(--muted); padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--border); text-transform: uppercase; letter-spacing: 0.1em; background: rgba(255,255,255,0.02); }
   .activity-table td { font-size: 12px; padding: 10px 14px; border-bottom: 1px solid var(--border); color: var(--text); }
   .activity-table tr:last-child td { border-bottom: none; }
@@ -151,10 +132,9 @@
 <div class="orb orb2"></div>
 
 <div class="wrap">
-
   <header>
-    <div class="header-left">
-      <span class="header-eyebrow">Câmara Municipal de Cascais</span>
+    <div>
+      <div class="header-eyebrow">Câmara Municipal de Cascais</div>
       <h1>Social Media Dashboard</h1>
     </div>
     <div class="header-right">
@@ -164,7 +144,6 @@
     </div>
   </header>
 
-  <!-- Metric cards -->
   <div class="metrics-grid">
     <div class="metric-card fb">
       <div class="card-top">
@@ -173,7 +152,7 @@
       </div>
       <div class="metric-value fb-val" id="fb-value">—</div>
       <div class="deltas" id="fb-deltas"></div>
-      <div style="font-size:11px;color:var(--muted);margin-top:8px;font-family:'Space Mono',monospace" id="fb-note">A ligar ao Swonkie...</div>
+      <div style="font-size:11px;color:var(--muted);margin-top:8px;font-family:'Space Mono',monospace" id="fb-note">A ligar...</div>
     </div>
 
     <div class="metric-card ig">
@@ -183,7 +162,7 @@
       </div>
       <div class="metric-value ig-val" id="ig-value">—</div>
       <div class="deltas" id="ig-deltas"></div>
-      <div style="font-size:11px;color:var(--muted);margin-top:8px;font-family:'Space Mono',monospace" id="ig-note">A ligar ao Swonkie...</div>
+      <div style="font-size:11px;color:var(--muted);margin-top:8px;font-family:'Space Mono',monospace" id="ig-note">A ligar...</div>
     </div>
 
     <div class="metric-card total">
@@ -195,91 +174,55 @@
     </div>
   </div>
 
-  <!-- Growth table -->
   <div class="section-header">
     <span class="section-title">Crescimento por período</span>
     <div class="section-line"></div>
   </div>
-
   <table class="growth-table">
-    <thead>
-      <tr>
-        <th>Rede</th>
-        <th>vs anterior</th>
-        <th>vs 7 dias</th>
-        <th>vs 30 dias</th>
-        <th>Atual</th>
-      </tr>
-    </thead>
-    <tbody id="growth-tbody">
-      <tr><td colspan="5" class="no-data">A carregar...</td></tr>
-    </tbody>
+    <thead><tr><th>Rede</th><th>vs anterior</th><th>vs 7 dias</th><th>vs 30 dias</th><th>Atual</th></tr></thead>
+    <tbody id="growth-tbody"><tr><td colspan="5" class="no-data">A carregar...</td></tr></tbody>
   </table>
 
-  <!-- Charts -->
-  <div class="charts-grid">
+  <div class="charts-grid" style="grid-template-columns:1fr 1fr;margin-bottom:24px">
     <div class="chart-card">
-      <div class="chart-label">Evolução de seguidores — Facebook + Instagram</div>
-      <div style="position:relative;height:240px">
-        <canvas id="growthChart" role="img" aria-label="Evolução de seguidores"></canvas>
-      </div>
-      <div class="legend">
-        <div class="legend-item"><div class="legend-sq" style="background:var(--blue)"></div>Facebook</div>
-        <div class="legend-item"><div class="legend-sq" style="background:var(--pink)"></div>Instagram</div>
-      </div>
+      <div class="chart-label" style="color:var(--blue)">▲ Facebook — evolução de seguidores</div>
+      <div style="font-family:'Space Mono',monospace;font-size:10px;color:var(--muted);margin-bottom:12px" id="fb-chart-stats">—</div>
+      <div style="position:relative;height:200px"><canvas id="fbChart" role="img" aria-label="Evolução Facebook"></canvas></div>
     </div>
     <div class="chart-card">
-      <div class="chart-label">Distribuição de seguidores</div>
-      <div style="position:relative;height:200px">
-        <canvas id="donutChart" role="img" aria-label="Distribuição de seguidores por rede"></canvas>
-      </div>
-      <div id="donut-legend" class="legend"></div>
+      <div class="chart-label" style="color:var(--pink)">▲ Instagram — evolução de seguidores</div>
+      <div style="font-family:'Space Mono',monospace;font-size:10px;color:var(--muted);margin-bottom:12px" id="ig-chart-stats">—</div>
+      <div style="position:relative;height:200px"><canvas id="igChart" role="img" aria-label="Evolução Instagram"></canvas></div>
+    </div>
+  </div>
+  <div class="chart-card" style="margin-bottom:24px">
+    <div class="chart-label">Distribuição de seguidores</div>
+    <div style="display:flex;gap:24px;align-items:center">
+      <div style="position:relative;height:160px;width:160px;flex-shrink:0"><canvas id="donutChart" role="img" aria-label="Distribuição"></canvas></div>
+      <div id="donut-legend" class="legend" style="flex-direction:column"></div>
     </div>
   </div>
 
-  <!-- Facebook posts -->
   <div class="section-header">
     <span class="section-title" style="color:var(--blue)">Posts Facebook — automático</span>
     <div class="section-line"></div>
     <span class="status-pill pill-loading" id="fb-posts-badge" style="white-space:nowrap">LOADING</span>
   </div>
-
   <div class="posts-grid">
-    <div class="posts-card">
-      <div class="posts-label">Hoje</div>
-      <div class="posts-value" id="fb-posts-today">—</div>
-      <div class="posts-sub" id="fb-posts-today-date">—</div>
-    </div>
-    <div class="posts-card">
-      <div class="posts-label">Esta semana</div>
-      <div class="posts-value" id="fb-posts-week">—</div>
-      <div class="posts-sub">seg — dom</div>
-    </div>
-    <div class="posts-card">
-      <div class="posts-label">Este mês</div>
-      <div class="posts-value" id="fb-posts-month">—</div>
-      <div class="posts-sub" id="fb-posts-month-label">—</div>
-    </div>
-    <div class="posts-card">
-      <div class="posts-label">Média diária</div>
-      <div class="posts-value" id="fb-posts-avg">—</div>
-      <div class="posts-sub">posts/dia este mês</div>
-    </div>
+    <div class="posts-card"><div class="posts-label">Hoje</div><div class="posts-value" id="fb-posts-today">—</div><div class="posts-sub" id="fb-posts-today-date">—</div></div>
+    <div class="posts-card"><div class="posts-label">Esta semana</div><div class="posts-value" id="fb-posts-week">—</div><div class="posts-sub">seg — dom</div></div>
+    <div class="posts-card"><div class="posts-label">Este mês</div><div class="posts-value" id="fb-posts-month">—</div><div class="posts-sub" id="fb-posts-month-label">—</div></div>
+    <div class="posts-card"><div class="posts-label">Média diária</div><div class="posts-value" id="fb-posts-avg">—</div><div class="posts-sub">posts/dia este mês</div></div>
   </div>
-
   <div class="chart-card" style="margin-bottom:24px">
     <div class="chart-label">Posts Facebook por dia — últimos 30 dias</div>
-    <div style="position:relative;height:180px">
-      <canvas id="postsChart" role="img" aria-label="Posts Facebook por dia"></canvas>
-    </div>
+    <div style="position:relative;height:180px"><canvas id="postsChart" role="img" aria-label="Posts por dia"></canvas></div>
   </div>
 
-  <!-- Weekly Instagram activity -->
   <div class="section-header">
     <span class="section-title" style="color:var(--pink)">Atividade semanal — Instagram</span>
     <div class="section-line"></div>
   </div>
-
   <div class="weekly-panel">
     <div class="weekly-week">Semana de <span id="week-label">—</span></div>
     <div class="weekly-net">
@@ -291,327 +234,251 @@
         <div class="wfield"><label>Interações</label><input type="number" id="ig-engage" placeholder="0" min="0"></div>
       </div>
       <div class="weekly-save-row">
-        <button class="wsave-btn" onclick="saveWeekly('ig')">↻ GUARDAR SEMANA</button>
+        <button class="wsave-btn" onclick="saveWeekly()">↻ GUARDAR SEMANA</button>
         <span class="wsaved" id="ig-wsaved">✓ SAVED</span>
       </div>
     </div>
   </div>
 
-  <!-- Activity history -->
   <div class="section-header">
     <span class="section-title">Histórico semanal Instagram</span>
     <div class="section-line"></div>
   </div>
-
-  <table class="activity-table" style="margin-bottom:24px">
-    <thead>
-      <tr>
-        <th>Semana</th>
-        <th>Posts</th>
-        <th>Stories</th>
-        <th>Alcance</th>
-        <th>Interações</th>
-      </tr>
-    </thead>
-    <tbody id="activity-tbody">
-      <tr><td colspan="5" class="no-data">Sem registos ainda</td></tr>
-    </tbody>
+  <table class="activity-table">
+    <thead><tr><th>Semana</th><th>Posts</th><th>Stories</th><th>Alcance</th><th>Interações</th></tr></thead>
+    <tbody id="activity-tbody"><tr><td colspan="5" class="no-data">Sem registos ainda</td></tr></tbody>
   </table>
 
-  <!-- Status footer -->
   <div class="status-footer">
-    <div class="status-item"><div class="status-dot dot-green" id="swonkie-dot"></div><span id="swonkie-status">Swonkie API — a verificar</span></div>
+    <div class="status-item"><div class="status-dot dot-green" id="api-dot"></div><span id="api-status">Swonkie API via Cloudflare Worker</span></div>
     <div class="status-item"><div class="status-dot dot-yellow"></div>Instagram posts — manual semanal</div>
-    <div class="status-item" style="margin-left:auto"><div class="status-dot dot-green"></div>Token: não expira</div>
+    <div class="status-item" style="margin-left:auto"><div class="status-dot dot-green"></div>Sem expiração de token</div>
   </div>
-
 </div>
 
 <script>
-const API_ID = '0deecf7b-d37d-461c-919c-23a9d9721500';
-const API_KEY = 'XBsoSQsYcvD/WqlNrle6vr+QJ4uVMJUUlt93SZfFBWE=';
-const FB_PROFILE = 'MS96MHRWVGNRM2pzbm5HT0d0UHExQT09';
-const IG_PROFILE = 'Njh1MnJCTGZXUjdEaXVXN1ZER3NPdz09';
-const FB_TOKEN = 'EAASGsuJnUn0BRHd0oaDZB45DkZA7eIVxHY9YCC3dOUmDIM3vOIdAi1nMusGUIhNn57fpMlbzcrEZCo6yQz8M0C5ojLfjZCseseDjO9rjNummJdd5TA6G4g5pRq7MxFzZAKyCP9I81DNmHLhRqjpHMZA5cyWxoiVByeqEO0sRFDNjnNCNRebLKurp8tZA35McC7jCndBCuj9OR9SDIvoQAwZD';
-const PAGE_ID = '346668692583';
-const HEADERS = { 'X-API-ID': API_ID, 'X-API-KEY': API_KEY };
-
+const WORKER = 'https://cascais-social-api.ricardo-amaral.workers.dev';
 let fbFollowers = 0, igFollowers = 0;
 let growthChart = null, donutChart = null, postsChart = null;
 let fbHistory = [], igHistory = [];
 
 function fmt(n) { if (!n || isNaN(n)) return '—'; return Math.round(n).toLocaleString('pt-PT'); }
-function today() { return new Date().toISOString().split('T')[0]; }
-function daysAgo(n) { const d = new Date(); d.setDate(d.getDate()-n); return d.toISOString().split('T')[0]; }
 
 function getWeekLabel() {
-  const now = new Date();
-  const day = now.getDay();
-  const diff = now.getDate() - day + (day===0?-6:1);
-  const mon = new Date(now); mon.setDate(diff);
+  const now = new Date(), day = now.getDay();
+  const mon = new Date(now); mon.setDate(now.getDate() - (day===0?6:day-1));
   const sun = new Date(mon); sun.setDate(mon.getDate()+6);
   return mon.toLocaleDateString('pt-PT',{day:'2-digit',month:'2-digit'}) + ' – ' + sun.toLocaleDateString('pt-PT',{day:'2-digit',month:'2-digit',year:'numeric'});
 }
 function getWeekKey() {
-  const now = new Date();
-  const day = now.getDay();
-  const diff = now.getDate() - day + (day===0?-6:1);
-  const mon = new Date(now); mon.setDate(diff);
+  const now = new Date(), day = now.getDay();
+  const mon = new Date(now); mon.setDate(now.getDate() - (day===0?6:day-1));
   return mon.toLocaleDateString('pt-PT');
 }
 
 function deltaPill(diff, label) {
-  if (diff === null || diff === undefined) return '';
-  const cls = diff > 0 ? 'delta-pos' : diff < 0 ? 'delta-neg' : 'delta-zero';
-  const sign = diff > 0 ? '+' : '';
-  return `<div><div class="delta ${cls}">${sign}${fmt(diff)}</div><div class="delta-lbl">${label}</div></div>`;
+  if (diff === null) return '';
+  const cls = diff>0?'delta-pos':diff<0?'delta-neg':'delta-zero';
+  return `<div><div class="delta ${cls}">${diff>0?'+':''}${fmt(diff)}</div><div class="delta-lbl">${label}</div></div>`;
 }
 
-function calcDeltas(history) {
-  if (!history || history.length < 2) return {d1:null,d7:null,d30:null};
-  const cur = history[history.length-1].value;
-  const get = n => history[history.length-1-Math.min(n,history.length-1)]?.value;
-  return { d1: cur-(get(1)||cur), d7: cur-(get(7)||cur), d30: cur-(get(30)||cur) };
+function calcDeltas(h) {
+  if (!h||h.length<2) return {d1:null,d7:null,d30:null};
+  const cur = h[h.length-1].value;
+  const get = n => h[h.length-1-Math.min(n,h.length-1)]?.value||cur;
+  return {d1:cur-get(1), d7:cur-get(7), d30:cur-get(30)};
 }
 
-function renderDeltas(elId, history) {
+function renderDeltas(elId, h) {
   const el = document.getElementById(elId);
   if (!el) return;
-  if (!history || history.length < 2) {
-    el.innerHTML = '<span style="font-size:10px;color:var(--muted);font-family:Space Mono,monospace">Histórico insuficiente</span>';
-    return;
-  }
-  const {d1,d7,d30} = calcDeltas(history);
+  if (!h||h.length<2) { el.innerHTML='<span style="font-size:10px;color:var(--muted);font-family:Space Mono,monospace">Histórico insuficiente</span>'; return; }
+  const {d1,d7,d30} = calcDeltas(h);
   el.innerHTML = deltaPill(d1,'vs anterior') + deltaPill(d7,'vs 7 dias') + deltaPill(d30,'vs 30 dias');
-}
-
-async function swonkieInsights(profileId, metric, since, until, take=90) {
-  const url = `https://api.swonkie.dev/v2/profile/${profileId}/insights?skip=0&take=${take}&since=${since}&until=${until}&metrics=${metric}`;
-  const res = await fetch(url, { headers: HEADERS });
-  const data = await res.json();
-  if (data.error) throw new Error(data.message);
-  return data.items || [];
 }
 
 async function loadFacebook() {
   const badge = document.getElementById('fb-badge');
-  badge.textContent = 'LOADING'; badge.className = 'status-pill pill-loading';
+  badge.textContent='LOADING'; badge.className='status-pill pill-loading';
   try {
-    const items = await swonkieInsights(FB_PROFILE, 'fb-daily-page-follows', daysAgo(90), today());
-    fbHistory = items.map(i => ({ date: i.date.split('T')[0], value: i.insights[0]?.value||0 })).reverse();
-    fbFollowers = fbHistory[fbHistory.length-1]?.value || 0;
-    badge.textContent = 'LIVE'; badge.className = 'status-pill pill-live';
+    const res = await fetch(`${WORKER}/fb-followers`);
+    const data = await res.json();
+    if (data.error) throw new Error(data.error);
+    fbHistory = (data.items||[]).map(i=>({date:i.date.split('T')[0], value:i.insights[0]?.value||0})).reverse();
+    fbFollowers = fbHistory[fbHistory.length-1]?.value||0;
+    badge.textContent='LIVE'; badge.className='status-pill pill-live';
     document.getElementById('fb-value').textContent = fmt(fbFollowers);
     document.getElementById('fb-note').textContent = 'Swonkie · ' + new Date().toLocaleTimeString('pt-PT',{hour:'2-digit',minute:'2-digit'});
-    document.getElementById('swonkie-dot').className = 'status-dot dot-green';
-    document.getElementById('swonkie-status').textContent = 'Swonkie API — ligado';
+    document.getElementById('api-dot').className='status-dot dot-green';
+    document.getElementById('api-status').textContent='Swonkie API via Cloudflare Worker — ligado';
     renderDeltas('fb-deltas', fbHistory);
-    renderGrowthChart();
-    updateTotal();
+    renderGrowthChart(); updateTotal();
   } catch(e) {
-    badge.textContent = 'ERRO'; badge.className = 'status-pill pill-error';
-    document.getElementById('fb-value').textContent = '—';
+    badge.textContent='ERRO'; badge.className='status-pill pill-error';
     document.getElementById('fb-note').textContent = e.message;
-    document.getElementById('swonkie-dot').className = 'status-dot dot-red';
+    document.getElementById('api-dot').className='status-dot dot-red';
   }
 }
 
 async function loadInstagram() {
   const badge = document.getElementById('ig-badge');
-  badge.textContent = 'LOADING'; badge.className = 'status-pill pill-loading';
+  badge.textContent='LOADING'; badge.className='status-pill pill-loading';
   try {
-    const items = await swonkieInsights(IG_PROFILE, 'ig-daily-followers-count', daysAgo(90), today());
-    igHistory = items.map(i => ({ date: i.date.split('T')[0], value: i.insights[0]?.value||0 })).reverse();
-    igFollowers = igHistory[igHistory.length-1]?.value || 0;
-    badge.textContent = 'LIVE'; badge.className = 'status-pill pill-live';
+    const res = await fetch(`${WORKER}/ig-followers`);
+    const data = await res.json();
+    if (data.error) throw new Error(data.error);
+    igHistory = (data.items||[]).map(i=>({date:i.date.split('T')[0], value:i.insights[0]?.value||0})).reverse();
+    igFollowers = igHistory[igHistory.length-1]?.value||0;
+    badge.textContent='LIVE'; badge.className='status-pill pill-live';
     document.getElementById('ig-value').textContent = fmt(igFollowers);
     document.getElementById('ig-note').textContent = 'Swonkie · ' + new Date().toLocaleTimeString('pt-PT',{hour:'2-digit',minute:'2-digit'});
     renderDeltas('ig-deltas', igHistory);
-    renderGrowthChart();
-    updateTotal();
+    renderGrowthChart(); updateTotal();
   } catch(e) {
-    badge.textContent = 'ERRO'; badge.className = 'status-pill pill-error';
-    document.getElementById('ig-value').textContent = '—';
+    badge.textContent='ERRO'; badge.className='status-pill pill-error';
     document.getElementById('ig-note').textContent = e.message;
   }
 }
 
 async function loadFacebookPosts() {
   const badge = document.getElementById('fb-posts-badge');
-  badge.textContent = 'LOADING'; badge.className = 'status-pill pill-loading';
+  badge.textContent='LOADING'; badge.className='status-pill pill-loading';
   try {
     const now = new Date();
     const todayStr = now.toLocaleDateString('pt-PT');
-    const weekStart = new Date(now);
-    const dow = now.getDay();
-    weekStart.setDate(now.getDate()-(dow===0?6:dow-1));
-    weekStart.setHours(0,0,0,0);
+    const weekStart = new Date(now); const dow=now.getDay(); weekStart.setDate(now.getDate()-(dow===0?6:dow-1)); weekStart.setHours(0,0,0,0);
     const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
-    let allPosts = [], url = `https://graph.facebook.com/v19.0/${PAGE_ID}/posts?fields=id,created_time&limit=100&access_token=${FB_TOKEN}`;
-    for (let p=0;p<3;p++) {
-      const res = await fetch(url);
-      const data = await res.json();
-      if (data.error||!data.data) break;
-      allPosts = allPosts.concat(data.data);
-      if (!data.paging?.next) break;
-      url = data.paging.next;
-      if (new Date(data.data[data.data.length-1].created_time) < monthStart) break;
+    let allPosts=[], url=`${WORKER}/fb-posts`;
+    for(let p=0;p<3;p++){
+      const res=await fetch(url); const data=await res.json();
+      if(data.error||!data.data) break;
+      allPosts=allPosts.concat(data.data);
+      if(!data.paging?.next) break;
+      url=data.paging.next;
+      if(new Date(data.data[data.data.length-1].created_time)<monthStart) break;
     }
-    const dailyCounts = {};
-    let todayCount=0, weekCount=0, monthCount=0;
-    allPosts.forEach(post => {
-      const d = new Date(post.created_time);
-      const dStr = d.toLocaleDateString('pt-PT');
-      dailyCounts[dStr] = (dailyCounts[dStr]||0)+1;
-      if (dStr===todayStr) todayCount++;
-      if (d>=weekStart) weekCount++;
-      if (d>=monthStart) monthCount++;
-    });
-    const daysInMonth = now.getDate();
-    document.getElementById('fb-posts-today').textContent = todayCount;
-    document.getElementById('fb-posts-today-date').textContent = now.toLocaleDateString('pt-PT',{weekday:'long',day:'2-digit',month:'2-digit'});
-    document.getElementById('fb-posts-week').textContent = weekCount;
-    document.getElementById('fb-posts-month').textContent = monthCount;
-    document.getElementById('fb-posts-month-label').textContent = now.toLocaleDateString('pt-PT',{month:'long',year:'numeric'});
-    document.getElementById('fb-posts-avg').textContent = monthCount>0?(monthCount/daysInMonth).toFixed(1):'0';
-    badge.textContent = 'LIVE'; badge.className = 'status-pill pill-live';
-    renderPostsChart(dailyCounts, now);
-  } catch(e) {
-    badge.textContent = 'ERRO'; badge.className = 'status-pill pill-error';
-  }
+    const dc={};let tc=0,wc=0,mc=0;
+    allPosts.forEach(p=>{const d=new Date(p.created_time),s=d.toLocaleDateString('pt-PT');dc[s]=(dc[s]||0)+1;if(s===todayStr)tc++;if(d>=weekStart)wc++;if(d>=monthStart)mc++;});
+    document.getElementById('fb-posts-today').textContent=tc;
+    document.getElementById('fb-posts-today-date').textContent=now.toLocaleDateString('pt-PT',{weekday:'long',day:'2-digit',month:'2-digit'});
+    document.getElementById('fb-posts-week').textContent=wc;
+    document.getElementById('fb-posts-month').textContent=mc;
+    document.getElementById('fb-posts-month-label').textContent=now.toLocaleDateString('pt-PT',{month:'long',year:'numeric'});
+    document.getElementById('fb-posts-avg').textContent=mc>0?(mc/now.getDate()).toFixed(1):'0';
+    badge.textContent='LIVE'; badge.className='status-pill pill-live';
+    renderPostsChart(dc,now);
+  } catch(e) { badge.textContent='ERRO'; badge.className='status-pill pill-error'; }
 }
 
 function updateTotal() {
-  const total = fbFollowers + igFollowers;
-  document.getElementById('total-value').textContent = total > 0 ? fmt(total) : '—';
-  renderDonut(fbFollowers, igFollowers);
+  const total = fbFollowers+igFollowers;
+  document.getElementById('total-value').textContent = total>0?fmt(total):'—';
+  renderDonut(fbFollowers,igFollowers);
   renderGrowthTable();
 }
 
 function renderGrowthTable() {
-  const nets = [
-    {name:'Facebook', color:'var(--blue)', h:fbHistory, cur:fbFollowers},
-    {name:'Instagram', color:'var(--pink)', h:igHistory, cur:igFollowers}
-  ];
-  const pill = v => {
-    if (v===null||v===undefined) return '<span class="dp" style="background:var(--faint);padding:2px 8px;border-radius:4px;color:var(--muted)">—</span>';
-    const cls = v>0?'delta-pos':v<0?'delta-neg':'delta-zero';
-    return `<span class="dp delta ${cls}">${v>0?'+':''}${fmt(v)}</span>`;
-  };
-  document.getElementById('growth-tbody').innerHTML = nets.map(n => {
-    const {d1,d7,d30} = calcDeltas(n.h);
-    return `<tr>
-      <td><div class="net-tag"><div style="width:8px;height:8px;border-radius:50%;background:${n.color}"></div>${n.name}</div></td>
-      <td>${pill(d1)}</td><td>${pill(d7)}</td><td>${pill(d30)}</td>
-      <td style="font-family:'Space Mono',monospace;font-size:12px">${fmt(n.cur)}</td>
-    </tr>`;
-  }).join('');
+  const nets=[{name:'Facebook',color:'var(--blue)',h:fbHistory,cur:fbFollowers},{name:'Instagram',color:'var(--pink)',h:igHistory,cur:igFollowers}];
+  const pill=v=>{if(v===null)return`<span style="background:var(--faint);padding:2px 8px;border-radius:4px;color:var(--muted);font-family:'Space Mono',monospace;font-size:11px">—</span>`;const cls=v>0?'delta-pos':v<0?'delta-neg':'delta-zero';return`<span class="delta ${cls}">${v>0?'+':''}${fmt(v)}</span>`;};
+  document.getElementById('growth-tbody').innerHTML=nets.map(n=>{const{d1,d7,d30}=calcDeltas(n.h);return`<tr><td><div class="net-tag"><div style="width:8px;height:8px;border-radius:50%;background:${n.color}"></div>${n.name}</div></td><td>${pill(d1)}</td><td>${pill(d7)}</td><td>${pill(d30)}</td><td style="font-family:'Space Mono',monospace;font-size:12px">${fmt(n.cur)}</td></tr>`;}).join('');
+}
+
+let fbChart = null, igChart = null;
+
+function makeLineChart(canvasId, history, color, bgColor) {
+  const ctx = document.getElementById(canvasId).getContext('2d');
+  const minVal = history.length ? Math.min(...history.map(h=>h.value)) : 0;
+  const maxVal = history.length ? Math.max(...history.map(h=>h.value)) : 0;
+  const pad = Math.max((maxVal - minVal) * 0.1, 100);
+  return new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: history.map(h => h.date.slice(5)),
+      datasets: [{
+        data: history.map(h => h.value),
+        borderColor: color,
+        backgroundColor: bgColor,
+        borderWidth: 2,
+        pointRadius: 0,
+        fill: true,
+        tension: 0.4
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { ticks: { font:{size:10}, color:'rgba(240,244,255,0.3)', autoSkip:true, maxTicksLimit:8 }, grid: { color:'rgba(255,255,255,0.04)' }, border: { color:'rgba(255,255,255,0.06)' } },
+        y: { min: minVal - pad, max: maxVal + pad, ticks: { font:{size:10}, color:'rgba(240,244,255,0.3)', callback: v => v>=1000?(v/1000).toFixed(0)+'k':v }, grid: { color:'rgba(255,255,255,0.04)' }, border: { color:'rgba(255,255,255,0.06)' } }
+      }
+    }
+  });
 }
 
 function renderGrowthChart() {
-  const ctx = document.getElementById('growthChart').getContext('2d');
-  if (growthChart) growthChart.destroy();
-  growthChart = new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: fbHistory.map(h => h.date.slice(5)),
-      datasets: [
-        { label:'Facebook', data:fbHistory.map(h=>h.value), borderColor:'#00d4ff', backgroundColor:'rgba(0,212,255,0.08)', borderWidth:2, pointRadius:0, fill:true, tension:0.4 },
-        { label:'Instagram', data:igHistory.map(h=>h.value), borderColor:'#ff2d7e', backgroundColor:'rgba(255,45,126,0.08)', borderWidth:2, pointRadius:0, fill:true, tension:0.4 }
-      ]
-    },
-    options: {
-      responsive:true, maintainAspectRatio:false,
-      plugins:{ legend:{ display:false } },
-      scales:{
-        x:{ ticks:{ font:{size:10}, color:'rgba(240,244,255,0.3)', autoSkip:true, maxTicksLimit:8 }, grid:{ color:'rgba(255,255,255,0.04)' }, border:{ color:'rgba(255,255,255,0.06)' } },
-        y:{ ticks:{ font:{size:10}, color:'rgba(240,244,255,0.3)', callback:v=>v>=1000?(v/1000).toFixed(0)+'k':v }, grid:{ color:'rgba(255,255,255,0.04)' }, border:{ color:'rgba(255,255,255,0.06)' } }
-      }
-    }
-  });
-}
-
-function renderDonut(fb, ig) {
-  const total = fb+ig;
-  const ctx = document.getElementById('donutChart').getContext('2d');
-  if (donutChart) donutChart.destroy();
-  if (!total) return;
-  donutChart = new Chart(ctx, {
-    type:'doughnut',
-    data:{ labels:['Facebook','Instagram'], datasets:[{ data:[fb,ig], backgroundColor:['#00d4ff','#ff2d7e'], borderWidth:0, hoverOffset:6 }] },
-    options:{ responsive:true, maintainAspectRatio:false, cutout:'72%', plugins:{ legend:{ display:false } } }
-  });
-  document.getElementById('donut-legend').innerHTML = [
-    {l:'Facebook',c:'var(--blue)',v:fb},
-    {l:'Instagram',c:'var(--pink)',v:ig}
-  ].map(i=>`<div class="legend-item"><div class="legend-sq" style="background:${i.c}"></div>${i.l} — ${total?((i.v/total)*100).toFixed(1):0}%</div>`).join('');
-}
-
-function renderPostsChart(dailyCounts, now) {
-  const labels=[], values=[];
-  for (let i=29;i>=0;i--) {
-    const d = new Date(now); d.setDate(now.getDate()-i);
-    labels.push(d.toLocaleDateString('pt-PT',{day:'2-digit',month:'2-digit'}));
-    values.push(dailyCounts[d.toLocaleDateString('pt-PT')]||0);
+  if(fbChart) fbChart.destroy();
+  if(igChart) igChart.destroy();
+  if(fbHistory.length > 1) {
+    fbChart = makeLineChart('fbChart', fbHistory, '#00d4ff', 'rgba(0,212,255,0.08)');
+    const d30 = fbHistory[fbHistory.length-1].value - (fbHistory[fbHistory.length-1-Math.min(30,fbHistory.length-1)]?.value||0);
+    document.getElementById('fb-chart-stats').textContent = `Últimos 30 dias: ${d30>0?'+':''}${fmt(d30)} seguidores`;
   }
-  const ctx = document.getElementById('postsChart').getContext('2d');
-  if (postsChart) postsChart.destroy();
-  postsChart = new Chart(ctx, {
-    type:'bar',
-    data:{ labels, datasets:[{ label:'Posts', data:values, backgroundColor:'rgba(0,212,255,0.6)', borderRadius:3, hoverBackgroundColor:'#00d4ff' }] },
-    options:{
-      responsive:true, maintainAspectRatio:false,
-      plugins:{ legend:{ display:false } },
-      scales:{
-        x:{ ticks:{ font:{size:9}, color:'rgba(240,244,255,0.3)', autoSkip:true, maxTicksLimit:12 }, grid:{ display:false }, border:{ color:'rgba(255,255,255,0.06)' } },
-        y:{ ticks:{ font:{size:10}, color:'rgba(240,244,255,0.3)', stepSize:1 }, grid:{ color:'rgba(255,255,255,0.04)' }, border:{ color:'rgba(255,255,255,0.06)' }, min:0 }
-      }
-    }
-  });
+  if(igHistory.length > 1) {
+    igChart = makeLineChart('igChart', igHistory, '#ff2d7e', 'rgba(255,45,126,0.08)');
+    const d30 = igHistory[igHistory.length-1].value - (igHistory[igHistory.length-1-Math.min(30,igHistory.length-1)]?.value||0);
+    document.getElementById('ig-chart-stats').textContent = `Últimos 30 dias: ${d30>0?'+':''}${fmt(d30)} seguidores`;
+  }
 }
 
-function saveWeekly(net) {
-  const posts = parseInt(document.getElementById(net+'-posts').value)||0;
-  const stories = parseInt(document.getElementById(net+'-stories').value)||0;
-  const reach = parseInt(document.getElementById(net+'-reach').value)||0;
-  const engage = parseInt(document.getElementById(net+'-engage').value)||0;
-  const weekKey = getWeekKey();
-  let weekly = JSON.parse(localStorage.getItem('weekly_ig')||'[]');
-  const idx = weekly.findIndex(w=>w.week===weekKey);
-  const entry = {week:weekKey, weekLabel:getWeekLabel(), posts, stories, reach, engage};
-  if (idx>=0) weekly[idx]=entry; else weekly.push(entry);
-  if (weekly.length>100) weekly=weekly.slice(-100);
-  localStorage.setItem('weekly_ig', JSON.stringify(weekly));
-  const msg = document.getElementById(net+'-wsaved');
+function renderDonut(fb,ig) {
+  const total=fb+ig;
+  const ctx=document.getElementById('donutChart').getContext('2d');
+  if(donutChart) donutChart.destroy();
+  if(!total) return;
+  donutChart=new Chart(ctx,{type:'doughnut',data:{labels:['Facebook','Instagram'],datasets:[{data:[fb,ig],backgroundColor:['#00d4ff','#ff2d7e'],borderWidth:0,hoverOffset:6}]},options:{responsive:true,maintainAspectRatio:false,cutout:'72%',plugins:{legend:{display:false}}}});
+  document.getElementById('donut-legend').innerHTML=[{l:'Facebook',c:'var(--blue)',v:fb},{l:'Instagram',c:'var(--pink)',v:ig}].map(i=>`<div class="legend-item"><div class="legend-sq" style="background:${i.c}"></div>${i.l} — ${total?((i.v/total)*100).toFixed(1):0}%</div>`).join('');
+}
+
+function renderPostsChart(dc,now) {
+  const labels=[],values=[];
+  for(let i=29;i>=0;i--){const d=new Date(now);d.setDate(now.getDate()-i);labels.push(d.toLocaleDateString('pt-PT',{day:'2-digit',month:'2-digit'}));values.push(dc[d.toLocaleDateString('pt-PT')]||0);}
+  const ctx=document.getElementById('postsChart').getContext('2d');
+  if(postsChart) postsChart.destroy();
+  postsChart=new Chart(ctx,{type:'bar',data:{labels,datasets:[{label:'Posts',data:values,backgroundColor:'rgba(0,212,255,0.6)',borderRadius:3,hoverBackgroundColor:'#00d4ff'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{font:{size:9},color:'rgba(240,244,255,0.3)',autoSkip:true,maxTicksLimit:12},grid:{display:false},border:{color:'rgba(255,255,255,0.06)'}},y:{ticks:{font:{size:10},color:'rgba(240,244,255,0.3)',stepSize:1},grid:{color:'rgba(255,255,255,0.04)'},border:{color:'rgba(255,255,255,0.06)'},min:0}}}});
+}
+
+function saveWeekly() {
+  const posts=parseInt(document.getElementById('ig-posts').value)||0;
+  const stories=parseInt(document.getElementById('ig-stories').value)||0;
+  const reach=parseInt(document.getElementById('ig-reach').value)||0;
+  const engage=parseInt(document.getElementById('ig-engage').value)||0;
+  const weekKey=getWeekKey();
+  let weekly=JSON.parse(localStorage.getItem('weekly_ig')||'[]');
+  const idx=weekly.findIndex(w=>w.week===weekKey);
+  const entry={week:weekKey,weekLabel:getWeekLabel(),posts,stories,reach,engage};
+  if(idx>=0) weekly[idx]=entry; else weekly.push(entry);
+  if(weekly.length>100) weekly=weekly.slice(-100);
+  localStorage.setItem('weekly_ig',JSON.stringify(weekly));
+  const msg=document.getElementById('ig-wsaved');
   msg.style.opacity='1'; setTimeout(()=>msg.style.opacity='0',2500);
   renderActivityTable();
 }
 
 function renderActivityTable() {
-  const weekly = JSON.parse(localStorage.getItem('weekly_ig')||'[]');
-  if (!weekly.length) {
-    document.getElementById('activity-tbody').innerHTML='<tr><td colspan="5" class="no-data">SEM REGISTOS AINDA</td></tr>';
-    return;
-  }
-  document.getElementById('activity-tbody').innerHTML = [...weekly].reverse().map(w=>`
-    <tr>
-      <td style="font-family:'Space Mono',monospace;font-size:11px;color:var(--muted)">${w.weekLabel}</td>
-      <td style="font-family:'Space Mono',monospace">${fmt(w.posts)}</td>
-      <td style="font-family:'Space Mono',monospace">${fmt(w.stories)}</td>
-      <td style="font-family:'Space Mono',monospace">${fmt(w.reach)}</td>
-      <td style="font-family:'Space Mono',monospace">${fmt(w.engage)}</td>
-    </tr>`).join('');
+  const weekly=JSON.parse(localStorage.getItem('weekly_ig')||'[]');
+  if(!weekly.length){document.getElementById('activity-tbody').innerHTML='<tr><td colspan="5" class="no-data">SEM REGISTOS AINDA</td></tr>';return;}
+  document.getElementById('activity-tbody').innerHTML=[...weekly].reverse().map(w=>`<tr><td style="font-family:'Space Mono',monospace;font-size:11px;color:var(--muted)">${w.weekLabel}</td><td style="font-family:'Space Mono',monospace">${fmt(w.posts)}</td><td style="font-family:'Space Mono',monospace">${fmt(w.stories)}</td><td style="font-family:'Space Mono',monospace">${fmt(w.reach)}</td><td style="font-family:'Space Mono',monospace">${fmt(w.engage)}</td></tr>`).join('');
 }
 
 async function loadAll() {
-  document.getElementById('last-update').textContent = new Date().toLocaleTimeString('pt-PT',{hour:'2-digit',minute:'2-digit'});
-  await Promise.all([loadFacebook(), loadInstagram(), loadFacebookPosts()]);
+  document.getElementById('last-update').textContent=new Date().toLocaleTimeString('pt-PT',{hour:'2-digit',minute:'2-digit'});
+  await Promise.all([loadFacebook(),loadInstagram(),loadFacebookPosts()]);
 }
 
-document.getElementById('week-label').textContent = getWeekLabel();
+document.getElementById('week-label').textContent=getWeekLabel();
 renderActivityTable();
 loadAll();
-setInterval(loadAll, 300000);
+setInterval(loadAll,300000);
 </script>
 </body>
 </html>
